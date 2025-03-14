@@ -27,16 +27,16 @@ CREATE TABLE casting (
     FOREIGN KEY (director_id) REFERENCES directors (director_id)
 );
 
-CREATE TABLE listed_in (
+CREATE TABLE genres (
     listed_id SERIAL PRIMARY KEY,
     listed_name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE data_listed_in (
+CREATE TABLE genres_mapping (
     show_id BIGINT NOT NULL,
     listed_id INT NOT NULL,
     PRIMARY KEY (show_id, listed_id),
-    FOREIGN KEY (listed_id) REFERENCES listed_in (listed_id)
+    FOREIGN KEY (listed_id) REFERENCES genres (listed_id)
 );
 
 CREATE TABLE miscellaneous (
@@ -55,7 +55,7 @@ CREATE TABLE movie_info (
     listed_id INT NOT NULL,
     duration VARCHAR(255),
     PRIMARY KEY (show_id, listed_id),
-    FOREIGN KEY (listed_id) REFERENCES listed_in (listed_id)
+    FOREIGN KEY (listed_id) REFERENCES genres (listed_id) -- Updated to reference genres
 );
 
 CREATE TABLE movies (
@@ -63,9 +63,19 @@ CREATE TABLE movies (
     title VARCHAR(255) NOT NULL
 );
 
+-- Create the ratings table
 CREATE TABLE ratings (
-    show_id BIGINT PRIMARY KEY,
-    rating_description VARCHAR(255)
+    rating_id SERIAL PRIMARY KEY, -- Use SERIAL for auto-incrementing IDs
+    rating_description VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- Create the ratings_mapping table
+CREATE TABLE ratings_mapping (
+    show_id BIGINT NOT NULL,
+    rating_id INT NOT NULL,
+    PRIMARY KEY (show_id, rating_id),
+    FOREIGN KEY (show_id) REFERENCES movies(show_id),
+    FOREIGN KEY (rating_id) REFERENCES ratings(rating_id) -- Reference the correct table
 );
 
 CREATE TABLE time (
@@ -108,9 +118,16 @@ SELECT show_id, TO_DATE(date_added, 'Month DD, YYYY'), release_year
 FROM temp_netflix;
 
 -- Insert into ratings table
-INSERT INTO ratings (show_id, rating_description)
-SELECT show_id, rating
-FROM temp_netflix;
+INSERT INTO ratings (rating_description)
+SELECT DISTINCT rating
+FROM temp_netflix
+WHERE rating IS NOT NULL;
+
+-- Insert into ratings_mapping table
+INSERT INTO ratings_mapping (show_id, rating_id)
+SELECT t.show_id, r.rating_id
+FROM temp_netflix t
+JOIN ratings r ON t.rating = r.rating_description;
 
 -- Insert into movie_descriptions table
 INSERT INTO movie_descriptions (show_id, description)
@@ -122,26 +139,29 @@ INSERT INTO miscellaneous (show_id, type_name, country_name)
 SELECT show_id, type, country
 FROM temp_netflix;
 
--- Insert into listed_in table
-INSERT INTO listed_in (listed_name)
+-- Insert into genres table
+INSERT INTO genres (listed_name)
 SELECT DISTINCT TRIM(UNNEST(STRING_TO_ARRAY(listed_in, ',')))
-FROM temp_netflix;
+FROM temp_netflix
+WHERE listed_in IS NOT NULL;
 
--- Insert into data_listed_in table
-INSERT INTO data_listed_in (show_id, listed_id)
+-- Insert into genres_mapping table
+INSERT INTO genres_mapping (show_id, listed_id)
 SELECT t.show_id, l.listed_id
 FROM temp_netflix t
-JOIN listed_in l ON l.listed_name = ANY(STRING_TO_ARRAY(t.listed_in, ','));
+JOIN genres l ON l.listed_name = ANY(STRING_TO_ARRAY(t.listed_in, ','));
 
 -- Insert into cast_members table
 INSERT INTO cast_members (cast_member)
 SELECT DISTINCT TRIM(UNNEST(STRING_TO_ARRAY(cast_members, ',')))
-FROM temp_netflix;
+FROM temp_netflix
+WHERE cast_members IS NOT NULL;
 
 -- Insert into directors table
 INSERT INTO directors (director_name)
 SELECT DISTINCT TRIM(UNNEST(STRING_TO_ARRAY(director, ',')))
-FROM temp_netflix;
+FROM temp_netflix
+WHERE director IS NOT NULL;
 
 -- Insert into casting table
 INSERT INTO casting (show_id, cast_id, director_id)
@@ -150,11 +170,11 @@ FROM temp_netflix t
 JOIN cast_members c ON c.cast_member = ANY(STRING_TO_ARRAY(t.cast_members, ','))
 JOIN directors d ON d.director_name = ANY(STRING_TO_ARRAY(t.director, ','));
 
--- Step 8: Insert into movie_info table
+-- Insert into movie_info table
 INSERT INTO movie_info (show_id, listed_id, duration)
 SELECT t.show_id, l.listed_id, t.duration
 FROM temp_netflix t
-JOIN listed_in l ON l.listed_name = ANY(STRING_TO_ARRAY(t.listed_in, ','));
+JOIN genres l ON l.listed_name = ANY(STRING_TO_ARRAY(t.listed_in, ','));
 
 -- Step 8: Clean up the temporary table
 DROP TABLE temp_netflix;

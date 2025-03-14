@@ -32,27 +32,28 @@ INSERT INTO netflix_combined (
 SELECT
     m.show_id,
     m.title,
-    STRING_AGG(d.director_name, ', ') AS director_name,
-    STRING_AGG(cm.cast_member, ', ') AS cast_members,
-    ms.country_name,
+    COALESCE(STRING_AGG(DISTINCT d.director_name, ', '), '') AS director_name,
+    COALESCE(STRING_AGG(DISTINCT cm.cast_member, ', '), '') AS cast_members,
+    COALESCE(ms.country_name, '') AS country_name,
     t.date_added,
     t.release_year,
-    r.rating_description,
-    mi.duration,
-    STRING_AGG(li.listed_name, ', ') AS listed_in,
-    md.description,
-    ms.type_name
+    COALESCE(r.rating_description, '') AS rating_description,
+    COALESCE(mi.duration, '') AS duration,
+    COALESCE(STRING_AGG(DISTINCT g.listed_name, ', '), '') AS listed_in,
+    COALESCE(md.description, '') AS description,
+    COALESCE(ms.type_name, '') AS type_name
 FROM
     movies m
 LEFT JOIN time t ON m.show_id = t.show_id
-LEFT JOIN ratings r ON m.show_id = r.show_id
+LEFT JOIN ratings_mapping rm ON m.show_id = rm.show_id -- Join through ratings_mapping
+LEFT JOIN ratings r ON rm.rating_id = r.rating_id -- Join ratings table
 LEFT JOIN movie_descriptions md ON m.show_id = md.show_id
 LEFT JOIN miscellaneous ms ON m.show_id = ms.show_id
 LEFT JOIN casting c ON m.show_id = c.show_id
 LEFT JOIN cast_members cm ON c.cast_id = cm.cast_id
 LEFT JOIN directors d ON c.director_id = d.director_id
-LEFT JOIN data_listed_in dli ON m.show_id = dli.show_id
-LEFT JOIN listed_in li ON dli.listed_id = li.listed_id
+LEFT JOIN genres_mapping gm ON m.show_id = gm.show_id -- Join genres_mapping
+LEFT JOIN genres g ON gm.listed_id = g.listed_id -- Join genres
 LEFT JOIN movie_info mi ON m.show_id = mi.show_id
 GROUP BY
     m.show_id,
