@@ -1,3 +1,4 @@
+---------- Content Strategy Development ------------
 -- Investigate which genres or type of contents are most popular
 -- based on distributions of shows or movies across different genres and ratings over time
 
@@ -25,6 +26,7 @@ FROM show_data
 GROUP BY release_year, genre, type
 ORDER BY release_year, total_shows DESC, average_rating DESC;
 
+---------- Market Analysis -------------
 -- Analyze the distribution of content across different countries  to tailor marketing strategies
 -- based on the type of content each country spends the most time watching
 
@@ -63,3 +65,14 @@ SELECT
 FROM ranked_content
 WHERE rank = 1 -- Filter out the most-watched content type
 ORDER BY country_name;
+
+-- Query: Analyze which month have had historically the most releases
+-- based on the best time of the year
+SELECT
+    EXTRACT(MONTH FROM t.date_added) AS release_month,
+    COUNT(*) AS total_releases,
+    ROUND(AVG(rm.rating_id), 2) AS average_rating
+FROM time t
+JOIN ratings_mapping rm ON t.show_id = rm.show_id
+GROUP BY release_month
+ORDER BY total_releases, average_rating DESC;

@@ -7,3 +7,8 @@
 ### Market Analysis
 - Problem: Analyze the distribution of content across different countries  to tailor marketing strategies
 - Query: Identify tye type of content each country spends the most time watching.
+
+### Release Timing Analysis
+-- Problem: Determine the best time of the year to release new content
+-- Query: Analyze which month have had historically 
+
