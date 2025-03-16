@@ -15,3 +15,42 @@ JOIN miscellaneous m ON gm.show_id = m.show_id
 JOIN time t ON gm.show_id = t.show_id
 GROUP BY t.release_year, g.listed_name, m.type_name
 ORDER BY t.release_year, total_shows DESC, average_rating DESC;
+
+-- Analyze the distribution of content across different countries  to tailor marketing strategies
+-- based on the type of content each country spends the most time watching
+
+WITH content_duration AS (
+    -- CTE 1
+    SELECT
+        m.country_name,
+        m.type_name,
+        SUM(
+            CASE 
+                -- Extract numeric part if min
+                WHEN mi.duration LIKE '% min' THEN CAST(SUBSTRING(mi.duration FROM '^\d+') AS INTEGER)
+                --  Assuming 1 season = 600 minutes (10 hours)
+                WHEN mi.duration LIKE '% Season%' THEN CAST(SUBSTRING(mi.duration FROM '^\d+') AS INTEGER) * 600 
+                ELSE 0 -- Default for unknown formats
+            END
+        ) AS total_duration_minutes
+    FROM miscellaneous m
+    JOIN movie_info mi ON m.show_id = mi.show_id
+    GROUP BY m.country_name, m.type_name
+),
+ranked_content AS (
+    -- CTE 2 using CTE 1
+    SELECT
+        country_name,
+        type_name,
+        total_duration_minutes,
+        RANK() OVER (PARTITION BY country_name ORDER BY total_duration_minutes DESC) AS rank
+    FROM content_duration
+)
+-- Main query using CTE 3
+SELECT
+    country_name,
+    type_name AS most_watched_content_type,
+    total_duration_minutes
+FROM ranked_content
+WHERE rank = 1 -- Filter out the most-watched content type
+ORDER BY country_name;
