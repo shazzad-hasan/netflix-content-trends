@@ -76,3 +76,28 @@ FROM time t
 JOIN ratings_mapping rm ON t.show_id = rm.show_id
 GROUP BY release_month
 ORDER BY total_releases, average_rating DESC;
+
+-- Examine previous collaboration between directors and cast members the resulted highly 
+-- rated shows and movies
+with director_cast AS (
+    SELECT 
+        d.director_name,
+        cm.cast_member,
+        rm.rating_id,
+        r.rating_description
+    FROM casting c
+    JOIN directors  d ON c.director_id = d.director_id
+    JOIN cast_members cm ON c.cast_id = cm.cast_id
+    JOIN ratings_mapping rm ON c.show_id = rm.show_id
+    JOIN ratings r ON rm.rating_id = r.rating_id
+)
+SELECT 
+    director_name,
+    cast_member,
+    COUNT(*) AS total_collaboration,
+    ROUND(AVG(rating_id), 2) AS average_rating
+FROM director_cast
+GROUP BY director_name, cast_memberq
+HAVING AVG(rating_id) >= 7
+ORDER BY total_collaboration DESC, average_rating DESC; 
+

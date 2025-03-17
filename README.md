@@ -10,5 +10,8 @@
 
 ### Release Timing Analysis
 -- Problem: Determine the best time of the year to release new content
--- Query: Analyze which month have had historically 
+-- Query: Analyze which month have had historically the most releases
 
+## Director and Cast Analysis
+-- Problem: Identifying best director and cast members 
+-- Query: Examine previous collaboration between directors and cast members the resulted highly rated shows and movies
