@@ -15,3 +15,7 @@
 ## Director and Cast Analysis
 -- Problem: Identifying best director and cast members 
 -- Query: Examine previous collaboration between directors and cast members the resulted highly rated shows and movies
+
+## Viewer Preferences Analysis
+-- Problem: Analyze viewer preferences
+-- Query: Find genres and ratings of shows and movies with their release years to identify trends over time

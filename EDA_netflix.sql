@@ -101,3 +101,22 @@ GROUP BY director_name, cast_memberq
 HAVING AVG(rating_id) >= 7
 ORDER BY total_collaboration DESC, average_rating DESC; 
 
+-- Analyze viewer preferences based on genres and ratings over time
+with viewer_preferences AS (
+    SELECT 
+        g.listed_name AS genre,
+        t.release_year,
+        ROUND(AVG(rm.rating_id), 2) AS average_rating
+    FROM genres_mapping gm
+    JOIN genres g ON gm.listed_id = g.listed_id
+    JOIN ratings_mapping rm ON gm.show_id = rm.show_id
+    JOIN ratings r ON rm.rating_id = r.rating_id
+    JOIN time t ON gm.show_id = t.show_id
+    GROUP BY g.listed_name, t.release_year
+)
+SELECT
+    genre,
+    release_year,
+    average_rating
+FROM viewer_preferences
+ORDER BY release_year, average_rating;
