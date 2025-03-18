@@ -1,30 +1,30 @@
 # Analysing Netflix Content Trends
 
 ### Content Strategy Development
-- Problem: Examine which genres or type of contents are most popular to guide future content production and acquisition.
-- Query: Analyze the distributions of shows or movies across different genres and ratings over time to identify popular categories.
+- Problem: Identify the most popular genre to guide future content creation and acquisition strategies.
+- Query: Analyze the distributions of shows/movies across different genres and ratings over time to identify trending categories.
 
 ### Market Analysis
-- Problem: Analyze the distribution of content across different countries  to tailor marketing strategies
-- Query: Identify tye type of content each country spends the most time watching.
+- Problem: Analyze the distribution of content across different countries  to optimize marketing strategies.
+- Query: Identify the types of content that receive the most watch time in each country.
 
 ### Release Timing Analysis
-- Problem: Determine the best time of the year to release new content
-- Query: Analyze which month have had historically the most releases
+- Problem: Determine the optimal time of the year for releasing new content.
+- Query: Analyze which months have had the highest number of content releases.
 
 ## Director and Cast Analysis
-- Problem: Identifying best director and cast members 
-- Query: Examine previous collaboration between directors and cast members the resulted highly rated shows and movies
+- Problem: Identifying the most successful directors and cast members.
+- Query: Examine past collaborations between directors and cast members that have led to highly rated shows and movies.
 
 ## Viewer Preferences Analysis
-- Problem: Analyze viewer preferences
-- Query: Find genres and ratings of shows and movies with their release years to identify trends over time
+- Problem: Understand viewer preferences and trands.
+- Query: Analyze the genres, ratings, and release years of shows and movies to identify trends over time.
 
 ## Content Localization Strategy
-- Analyzing content and marketing strategies for specific contries
-- Query: Identify most common genres and type of shows/movies for each specific countries
+- Problem: Analyzing content and marketing strategies for specific contries.
+- Query: Identify most common genres and type of shows/movies for each specific countries.
 
 ## Budget Allocation for New Production
-- Determining which type of genres are most likely to succeed and deserve higher investment
-- Query: Assess the correlation between genre and their ratings
+- Problem: Identify which type of genres are most likely to succeed and warrant higher investment.
+- Query: Assess the correlation between genres and their ratings to determine high performing categories.
 
