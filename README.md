@@ -1,4 +1,4 @@
-# Analysing Nnetflix Content Trends
+# Analysing Netflix Content Trends
 
 ### Content Strategy Development
 - Problem: Examine which genres or type of contents are most popular to guide future content production and acquisition.

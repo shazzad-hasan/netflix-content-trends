@@ -66,6 +66,7 @@ FROM ranked_content
 WHERE rank = 1 -- Filter out the most-watched content type
 ORDER BY country_name;
 
+-------------- Release Timing Analysis ------------
 -- Query: Analyze which month have had historically the most releases
 -- based on the best time of the year
 SELECT
@@ -77,6 +78,7 @@ JOIN ratings_mapping rm ON t.show_id = rm.show_id
 GROUP BY release_month
 ORDER BY total_releases, average_rating DESC;
 
+-------------- Director and Cast Analysis ----------
 -- Examine previous collaboration between directors and cast members the resulted highly 
 -- rated shows and movies
 with director_cast AS (
@@ -101,6 +103,7 @@ GROUP BY director_name, cast_memberq
 HAVING AVG(rating_id) >= 7
 ORDER BY total_collaboration DESC, average_rating DESC; 
 
+---------------- Viewer Preferences Analysis ---------------------
 -- Analyze viewer preferences based on genres and ratings over time
 with viewer_preferences AS (
     SELECT 
@@ -121,6 +124,7 @@ SELECT
 FROM viewer_preferences
 ORDER BY release_year, average_rating;
 
+--------------- Content Localization Strategy -------------
 -- Optimizing content strategies for specific countries by identifying most common genre
 -- and type of movies/shows for each specific countries
 with country_preference AS (
@@ -142,6 +146,7 @@ SELECT
 FROM country_preference
 ORDER BY country_name, total_shows DESC;
 
+-------------- Budget Allocation for New Production -------------
 -- Determine budget allocation strategy based on correlation between 
 -- genre type and ratings/popularity
 with genre_popularity AS (
