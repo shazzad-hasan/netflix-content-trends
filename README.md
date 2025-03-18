@@ -19,3 +19,7 @@
 ## Viewer Preferences Analysis
 -- Problem: Analyze viewer preferences
 -- Query: Find genres and ratings of shows and movies with their release years to identify trends over time
+
+## Content Localization Strategy
+-- Analyzing content and marketing strategies for specific contries
+-- Query: Identify most common genres and type of shows/movies for each specific countries

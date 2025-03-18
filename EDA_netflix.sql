@@ -120,3 +120,24 @@ SELECT
     average_rating
 FROM viewer_preferences
 ORDER BY release_year, average_rating;
+
+-- Optimizing content strategies for specific countries by identifying most common genre
+-- and type of movies/shows for each specific countries
+with country_preference AS (
+    SELECT 
+        m.country_name,
+        g.listed_name AS genre,
+        m.type_name AS content_type,
+        COUNT(*) AS total_shows
+    FROM genres_mapping gm
+    JOIN genres g ON gm.listed_id = g.listed_id
+    JOIN miscellaneous m ON gm.show_id = m.show_id
+    GROUP BY m.country_name, g.listed_name, m.type_name
+)
+SELECT
+    country_name,
+    genre,
+    content_type,
+    total_shows
+FROM country_preference
+ORDER BY country_name, total_shows DESC;
