@@ -141,3 +141,25 @@ SELECT
     total_shows
 FROM country_preference
 ORDER BY country_name, total_shows DESC;
+
+-- Determine budget allocation strategy based on correlation between 
+-- genre type and ratings/popularity
+with genre_popularity AS (
+    SELECT
+        g.listed_name AS genre,
+        m.type_name AS content_type,
+        COUNT(*) AS total_shows,
+        ROUND(AVG(rm.rating_id), 2) AS average_rating
+    FROM genres_mapping gm
+    JOIN genres g ON gm.listed_id = g.listed_id
+    JOIN ratings_mapping rm ON gm.show_id = rm.show_id
+    JOIN miscellaneous m ON gm.show_id = m.show_id
+    GROUP BY g.listed_name, m.type_name
+)
+SELECT
+    genre,
+    content_type,
+    total_shows,
+    average_rating
+FROM genre_popularity
+ORDER BY average_rating DESC, total_shows DESC;
