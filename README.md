@@ -35,6 +35,7 @@ and enhance data integraty. Each tables represent a distinct aspect of the datas
 - **ratings**: Contains rating description and their respective descriptions
 - **ratings_mapping**: Associate shows/movies with their respective ratings
 - **time**: Contain movie/TV show IDs and their time related information such as the date on which the movie or TV show was added to Netflix and release year
+
 The **netflix_combined** table is a comprehensive table that integrates data from all the aformentioned tables through SQL joins.
 
 ### Potential Business Questions:
