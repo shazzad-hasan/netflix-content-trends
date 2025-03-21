@@ -39,13 +39,13 @@ and enhance data integraty. Each tables represent a distinct aspect of the datas
 - `ratings_mapping`: Associate shows/movies with their respective ratings
 - `time`: Contain movie/TV show IDs and their time related information such as the date on which the movie or TV show was added to Netflix and release year
 
-The **netflix_combined** table is a comprehensive table that integrates data from all the aforementioned tables through SQL joins.
+The `netflix_combined` table is a comprehensive table that integrates data from all the aforementioned tables through SQL joins.
 
 ### File Descriptions
 
-- **netflix_import.sql**: Running this file creates the entire database with all the individual tables.  
-- **combined_table.sql**: Running this file creates the `netflix_combined` table.  
-- **EDA_netflix.sql**: This SQL file contains all the queries written to answer potential business questions.  
+- `netflix_import.sql`: Running this file creates the entire database with all the individual tables.  
+- `combined_table.sql`: Running this file creates the `netflix_combined` table.  
+- `EDA_netflix.sql`: This SQL file contains all the queries written to answer potential business questions.  
 
 ### Potential Business Questions:
 
