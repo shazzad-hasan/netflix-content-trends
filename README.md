@@ -1,10 +1,12 @@
 # Analysing Netflix Content Trends
 
 ### Overview
+
 The goal of this project is to transform a flat CSV file dataset into a structured and normalized database
 and perform exploratory data analysis to address some potential business questions.
 
 ### Dataset
+
 The dataset consists of Netflix TV shows and movies as of 2019. It includes the following columns:
 
 - **show_id**:  Unique ID of the movie / TV show
@@ -20,6 +22,7 @@ The dataset consists of Netflix TV shows and movies as of 2019. It includes the 
 - **description**: The description / short summary of the movie or TV show
 
 ### Database Structure
+
 The database includes several tables, each tables are normalized to minimize redundancy
 and enhance data integraty. Each tables represent a distinct aspect of the dataset.
 
@@ -36,9 +39,16 @@ and enhance data integraty. Each tables represent a distinct aspect of the datas
 - **ratings_mapping**: Associate shows/movies with their respective ratings
 - **time**: Contain movie/TV show IDs and their time related information such as the date on which the movie or TV show was added to Netflix and release year
 
-The **netflix_combined** table is a comprehensive table that integrates data from all the aformentioned tables through SQL joins.
+The **netflix_combined** table is a comprehensive table that integrates data from all the aforementioned tables through SQL joins.
+
+### File Descriptions
+
+- **netflix_import.sql**: Running this file creates the entire database with all the individual tables.  
+- **combined_table.sql**: Running this file creates the `netflix_combined` table.  
+- **EDA_netflix.sql**: This SQL file contains all the queries written to answer potential business questions.  
 
 ### Potential Business Questions:
+
 #### Content Strategy Development
 - **Problem**: Identify the most popular genre to guide future content creation and acquisition strategies.
 - **Query**: Analyze the distributions of shows/movies across different genres and ratings over time to identify trending categories.
