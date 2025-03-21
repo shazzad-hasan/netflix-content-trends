@@ -23,19 +23,19 @@ The dataset consists of Netflix TV shows and movies as of 2019. It includes the 
 The database includes several tables, each tables are normalized to minimize redundancy
 and enhance data integraty. Each tables represent a distinct aspect of the dataset.
 
+- **movies**: Contains movie/TV show titles and their corresponding unique IDs
 - **cast_members**: Contains the names of cast members and their associated IDs
 - **directors**: Contains director names and their corresponding IDs
 - **genres**: Contains category/genres and their corresponding IDs
 - **casting**: Connects shows to their directors and cast members
 - **genres_mapping**: Links movies/TV shows to their genres
 - **miscellaneous**: Captures miscellaneous details such as type and country
-- **movie_descriptions**
-- **movie_info**
-- **movies**
-- **netflix_combined**
-- **ratings**
-- **ratings_mapping**
-- **time**
+- **movie_descriptions**: Contains movie/show IDs and their corresponding descriptions
+- **movie_info**: Contain additional movie/TV show information like duration
+- **ratings**: Contains rating description and their respective descriptions
+- **ratings_mapping**: Associate shows/movies with their respective ratings
+- **time**: Contain movie/TV show IDs and their time related information such as the date on which the movie or TV show was added to Netflix and release year
+The **netflix_combined** table is a comprehensive table that integrates data from all the aformentioned tables through SQL joins.
 
 ### Potential Business Questions:
 #### Content Strategy Development
