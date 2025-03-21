@@ -19,6 +19,24 @@ The dataset consists of Netflix TV shows and movies as of 2019. It includes the 
 - **listed_in**: The category / genre of the movie or TV show
 - **description**: The description / short summary of the movie or TV show
 
+### Database Structure
+The database includes several tables, each tables are normalized to minimize redundancy
+and enhance data integraty. Each tables represent a distinct aspect of the dataset.
+
+- **cast_members**: Contains the names of cast members and their associated IDs
+- **directors**: Contains director names and their corresponding IDs
+- **genres**: Contains category/genres and their corresponding IDs
+- **casting**: Connects shows to their directors and cast members
+- **genres_mapping**: Links movies/TV shows to their genres
+- **miscellaneous**: Captures miscellaneous details such as type and country
+- **movie_descriptions**
+- **movie_info**
+- **movies**
+- **netflix_combined**
+- **ratings**
+- **ratings_mapping**
+- **time**
+
 ### Potential Business Questions:
 #### Content Strategy Development
 - **Problem**: Identify the most popular genre to guide future content creation and acquisition strategies.
